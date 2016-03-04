@@ -8,6 +8,7 @@ var clean = require('gulp-clean');
 var typings = require('gulp-typings');
 var tslint = require('gulp-tslint');
 var sasslint = require('gulp-sass-lint');
+var mocha = require('gulp-mocha');
 
 gulp.task('build', ['build:server', 'build:client']);
 
@@ -79,4 +80,23 @@ gulp.task('lint:sass', () => {
 		.pipe(sasslint())
 		.pipe(sasslint.format())
 		.pipe(sasslint.failOnError());
+});
+
+gulp.task('test:client', ['build'], () => {
+	nodemon({
+		script: 'server/server.js',
+		ext: 'js html',
+		env: { 'NODE_ENV': 'testing' }
+	});
+});
+
+gulp.task('test:server', ['build'], () => {
+	return gulp.src(__dirname + '/server/**/*.spec.js' , {read: false})
+		// gulp-mocha needs filepaths so you can't have any plugins before it 
+		.pipe(mocha({
+			reporter: 'spec',
+			globals: {
+				should: require('should')
+			}
+		}));
 });

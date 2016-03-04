@@ -6,10 +6,12 @@ var sass = require('gulp-sass');
 var concatCss = require('gulp-concat-css');
 var clean = require('gulp-clean');
 var typings = require('gulp-typings');
+var tslint = require('gulp-tslint');
+var sasslint = require('gulp-sass-lint');
 
 gulp.task('build', ['build:server', 'build:client']);
 
-gulp.task('build:server', () => {
+gulp.task('build:server', ['lint:ts'], () => {
 	var tsProject = ts.createProject(__dirname + '/server/tsconfig.json');
 	return gulp.src(path.join(__dirname + '/server/**/*.ts'))
 		.pipe(ts(tsProject))
@@ -17,7 +19,7 @@ gulp.task('build:server', () => {
 		.pipe(gulp.dest(path.resolve('./server')));
 });
 
-gulp.task('build:client', ['sass'], () => {
+gulp.task('build:client', ['lint:sass', 'sass'], () => {
 	var tsProject = ts.createProject(__dirname + '/public/tsconfig.json');
 	return gulp.src(path.join(__dirname + '/public/**/*.ts'))
 		.pipe(ts(tsProject))
@@ -62,4 +64,19 @@ gulp.task('typings:server', () => {
 gulp.task('typings:client', () => {
 	return gulp.src(__dirname + '/public/typings.json')
 		.pipe(typings());
+});
+
+gulp.task('lint', ['lint:ts', 'lint:sass']);
+
+gulp.task('lint:ts', () => {
+	return gulp.src([__dirname + '/**/*.ts', '!node_modules/**/*', '!server/typings/**/*', '!public/typings/**/*'])
+		.pipe(tslint())
+		.pipe(tslint.report('prose'));
+});
+
+gulp.task('lint:sass', () => {
+	return gulp.src([__dirname + '/**/*.s+(a|c)ss', '!node_modules/**/*'])
+		.pipe(sasslint())
+		.pipe(sasslint.format())
+		.pipe(sasslint.failOnError());
 });

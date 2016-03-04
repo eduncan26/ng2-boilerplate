@@ -6,7 +6,7 @@ const port: number = process.env.PORT || 3000;
 const app = express();
 
 if (process.env.NODE_ENV !== 'production') {
-	app.use(morgan('dev'));	
+	app.use(morgan('dev'));
 } else {
 	app.use(morgan('common'));
 }

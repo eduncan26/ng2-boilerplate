@@ -3,9 +3,13 @@ import morgan = require('morgan');
 import path = require('path');
 import glob = require('glob');
 import consolidate = require('consolidate');
+import Mongo = require('./database/mongo');
 
 const port: number = process.env.PORT || 3000;
 const app = express();
+
+const db = new Mongo();
+db.connect();
 
 function getAngularTests() {
 	let files = glob.sync('public/**/*.spec.js');

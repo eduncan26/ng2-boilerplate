@@ -4,8 +4,7 @@
   "description": "Boilerplate for full stack typescript and Angular 2",
   "main": "/server/server.js",
   "scripts": {
-    "postinstall": "typings install",
-    "typings": "typings",
+    "postinstall": "gulp typings",
     "compile": "gulp build",
     "start": "gulp start"
   },
@@ -30,6 +29,7 @@
     "gulp-nodemon": "^2.0.6",
     "gulp-sass": "^2.2.0",
     "gulp-typescript": "^2.12.1",
+    "gulp-typings": "^1.1.0",
     "typescript": "^1.8.2",
     "typings": "^0.6.8"
   }

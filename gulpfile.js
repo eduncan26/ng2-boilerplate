@@ -5,6 +5,7 @@ var nodemon = require('gulp-nodemon');
 var sass = require('gulp-sass');
 var concatCss = require('gulp-concat-css');
 var clean = require('gulp-clean');
+var typings = require('gulp-typings');
 
 gulp.task('build', ['build:server', 'build:client']);
 
@@ -49,4 +50,16 @@ gulp.task('start', ['build'], () => {
 		ext: 'js html',
 		env: { 'NODE_ENV': 'development' }
 	});
+});
+
+gulp.task('typings', ['typings:server', 'typings:client']);
+
+gulp.task('typings:server', () => {
+	return gulp.src(__dirname + '/server/typings.json')
+		.pipe(typings());
+});
+
+gulp.task('typings:client', () => {
+	return gulp.src(__dirname + '/public/typings.json')
+		.pipe(typings());
 });

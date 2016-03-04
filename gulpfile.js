@@ -80,3 +80,11 @@ gulp.task('lint:sass', () => {
 		.pipe(sasslint.format())
 		.pipe(sasslint.failOnError());
 });
+
+gulp.task('test:client', ['build'], () => {
+	nodemon({
+		script: 'server/server.js',
+		ext: 'js html',
+		env: { 'NODE_ENV': 'testing' }
+	});
+});

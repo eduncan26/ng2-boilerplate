@@ -29,6 +29,7 @@
     "gulp": "^3.9.1",
     "gulp-clean": "^0.3.2",
     "gulp-concat-css": "^2.2.0",
+    "gulp-mocha": "^2.2.0",
     "gulp-nodemon": "^2.0.6",
     "gulp-sass": "^2.2.0",
     "gulp-sass-lint": "^1.1.1",
@@ -36,6 +37,7 @@
     "gulp-typescript": "^2.12.1",
     "gulp-typings": "^1.1.0",
     "jasmine-core": "2.4.1",
+    "should": "^8.2.2",
     "tslint": "^3.5.0",
     "typescript": "^1.8.2",
     "typings": "^0.6.8"

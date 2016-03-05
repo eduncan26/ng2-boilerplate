@@ -7,8 +7,7 @@ import Mongo = require('./database/mongo');
 
 const port: number = process.env.PORT || 3000;
 const app = express();
-
-const db = new Mongo();
+const db = new Mongo(process.env.MONGODB_CONNECTION_STRING);
 db.connect();
 
 function getAngularTests() {
@@ -34,13 +33,11 @@ if (process.env.NODE_ENV !== 'production') {
 	app.use(morgan('common'));
 }
 
+// Static Assets
 app.use('/', express.static(path.join(__dirname, '..', 'public')));
 app.use('/lib', express.static(path.join(__dirname, '..', 'node_modules')));
 
-if (process.env.NODE_ENV === 'testing') {
-	app.get('/', (req: express.Request, res: express.Response) => res.render('ng-unit-tests'));
-} else {
-	app.get('/', (req: express.Request, res: express.Response) => res.render('index'));
-}
+// Routes
+app.use('/', require('./routes'));
 
 app.listen(port, () => console.log('listening to port 3000'));

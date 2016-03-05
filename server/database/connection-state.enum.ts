@@ -1,6 +1,6 @@
 enum ConnectionState {
-	ALIVE = 'Alive',
-	DEAD = 'Dead'
+	ALIVE,
+	DEAD
 }
 
 export = ConnectionState;

@@ -1,7 +1,7 @@
-import ConnectionState = require('connection-stat.enum');
+import ConnectionState = require('./connection-state.enum');
 
 interface DB {
-	connection(): any;
+	connect(): any;
 	status(): ConnectionState;
 }
 

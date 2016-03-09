@@ -1,6 +1,5 @@
 var path = require('path');
 var gulp = require('gulp');
-var ts = require('gulp-typescript');
 var nodemon = require('gulp-nodemon');
 var sass = require('gulp-sass');
 var concatCss = require('gulp-concat-css');
@@ -9,15 +8,18 @@ var typings = require('gulp-typings');
 var tslint = require('gulp-tslint');
 var sasslint = require('gulp-sass-lint');
 var mocha = require('gulp-mocha');
+var spawn = require('gulp-spawn');
 
 gulp.task('build', ['build:server', 'build:client']);
 
 gulp.task('build:server', ['lint:ts'], () => {
-	var tsProject = ts.createProject(__dirname + '/server/tsconfig.json');
-	return gulp.src(path.join(__dirname + '/server/**/*.ts'))
-		.pipe(ts(tsProject))
-		.js
-		.pipe(gulp.dest(path.resolve('./server')));
+	spawn({
+		cmd: 'tsc',
+		args: [
+		'-p',
+		'/server'
+		]
+	});
 });
 
 gulp.task('build:client', ['lint:sass', 'sass'], () => {
